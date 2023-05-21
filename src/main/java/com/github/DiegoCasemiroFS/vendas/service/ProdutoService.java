@@ -17,7 +17,7 @@ public class ProdutoService {
 
     public Produto findById(Long id){
         return produtoRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
     }
 
     public List<Produto> ListAll(){

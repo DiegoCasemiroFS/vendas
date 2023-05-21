@@ -12,7 +12,7 @@ import java.util.List;
 //ApiREST - get, put, post, patch, delete; também utilizará os status http (Ex: 200, 404)
 
 @RestController//recebe verbo (get, put, post, patch, delete) e devolve codigo (Ex: 200, 404)
-@RequestMapping("v1/api/cliente") //define o prefixo da URL que será tratado por este controlador
+@RequestMapping("v1/api/clientes") //define o prefixo da URL que será tratado por este controlador
 public class ClienteController {
 
     @Autowired

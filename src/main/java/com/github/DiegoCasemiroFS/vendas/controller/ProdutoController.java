@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/api/produto")
+@RequestMapping("v1/api/produtos")
 public class ProdutoController{
 
     @Autowired
-
     private ProdutoService produtoService;
 
     @GetMapping("/{id}")

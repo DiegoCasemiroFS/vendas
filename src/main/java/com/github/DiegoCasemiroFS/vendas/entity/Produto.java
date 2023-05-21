@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 // criar repository, controller e service p aula do dia 20/05
 
 @Entity
-@Table (name = "Table")
+@Table (name="produto")
 public class Produto {
 
     @Id
@@ -16,8 +16,11 @@ public class Produto {
     @Column(length = 100)
     private String descricao;
 
-    @Column(name = "Preço Unitário")
+    @Column(name = "preco_unitário")
     private BigDecimal preco;
+
+    public Produto() {
+    }
 
     public Produto(Long id, String descricao, BigDecimal preco) {
         this.id = id;
