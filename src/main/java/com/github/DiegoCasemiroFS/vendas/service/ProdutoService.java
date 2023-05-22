@@ -2,7 +2,7 @@ package com.github.DiegoCasemiroFS.vendas.service;
 
 import com.github.DiegoCasemiroFS.vendas.entity.Produto;
 import com.github.DiegoCasemiroFS.vendas.repository.ProdutoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,14 +10,16 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    private static final String REGISTRO_NOT_OFUND = "Produto não encontrado.";
+
+    private final ProdutoRepository produtoRepository;
 
     public Produto findById(Long id){
         return produtoRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_OFUND));
     }
 
     public List<Produto> ListAll(){
@@ -29,13 +31,21 @@ public class ProdutoService {
     }
 
     public Produto update(Long id, Produto produto){
-        findById(id);
-        produto.setId(id);
-        return produtoRepository.save(produto);
+        return produtoRepository.findById(id)
+                .map(f-> {
+                    produto.setId(f.getId());
+                    produtoRepository.save(produto);
+                    return produto;
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_OFUND));
     }
 
     public void delete(Long id) {
-        findById(id);
-        produtoRepository.deleteById(id);
+        produtoRepository.findById(id)
+                .map(f -> {
+                    produtoRepository.delete(f);
+                    return Void.TYPE;
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_OFUND));
     }
 }

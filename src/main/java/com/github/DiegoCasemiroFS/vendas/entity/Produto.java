@@ -1,15 +1,24 @@
 package com.github.DiegoCasemiroFS.vendas.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 // criar repository, controller e service p aula do dia 20/05
 
+@Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table (name="produto")
 public class Produto {
 
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,37 +27,4 @@ public class Produto {
 
     @Column(name = "preco_unitário")
     private BigDecimal preco;
-
-    public Produto() {
-    }
-
-    public Produto(Long id, String descricao, BigDecimal preco) {
-        this.id = id;
-        this.descricao = descricao;
-        this.preco = preco;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
 }

@@ -2,17 +2,18 @@ package com.github.DiegoCasemiroFS.vendas.controller;
 
 import com.github.DiegoCasemiroFS.vendas.entity.Produto;
 import com.github.DiegoCasemiroFS.vendas.service.ProdutoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("v1/api/produtos")
 public class ProdutoController{
 
-    @Autowired
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
 
     @GetMapping("/{id}")
     public Produto findById(@PathVariable Long id){
