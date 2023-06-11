@@ -5,16 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-
-// criar repository, controller e service p aula do dia 20/05
 
 @Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table (name="produto")
+@Table(name = "produtos")
 public class Produto {
 
     @Id
@@ -23,8 +28,11 @@ public class Produto {
     private Long id;
 
     @Column(length = 100)
+    @NotEmpty(message = "Campo descrição é obrigatório.")
+    @NotNull(message = "Campo descrição não deve ser nulo.")
     private String descricao;
 
-    @Column(name = "preco_unitário")
+    @Column(name = "preco_unitario")
     private BigDecimal preco;
 }
+

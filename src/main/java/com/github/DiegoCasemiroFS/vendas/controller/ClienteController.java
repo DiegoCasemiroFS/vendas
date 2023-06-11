@@ -3,7 +3,6 @@ package com.github.DiegoCasemiroFS.vendas.controller;
 import com.github.DiegoCasemiroFS.vendas.entity.Cliente;
 import com.github.DiegoCasemiroFS.vendas.service.ClienteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,7 @@ import java.util.List;
 @RequestMapping("v1/api/clientes") //define o prefixo da URL que será tratado por este controlador
 public class ClienteController {
 
-    private final
-    ClienteService clienteService;
+    private final ClienteService clienteService;
 
     @GetMapping("/{id}")
     public Cliente findById(@PathVariable Long id){

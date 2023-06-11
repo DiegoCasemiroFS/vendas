@@ -1,12 +1,17 @@
 package com.github.DiegoCasemiroFS.vendas.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Getter
 @Entity //marca a classe como uma tabela
@@ -15,19 +20,35 @@ import javax.persistence.*;
 @Table (name="cliente") //editar uma tabela
 public class Cliente {
 
-    @Id     //usado para definir uma chave primária, e quando eu quiser acessar qualquer informação
-            // da minha tabela, eu vou procurar pelo id (pirmary key)
+    @Id     //usado para definir uma chave primária, e quando eu quiser acessar qualquer informação da minha tabela, eu vou procurar pelo id (pirmary key)
     @Setter
     @Column(name = "id") // especifica o nome da coluna
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", length = 100) //define o nome e o tamanho da coluna
+    @Column(length = 100) //define o nome e o tamanho da coluna
+    @NotEmpty(message = "Campo nome e obrigatório")
+    @NotNull(message = "Campo nome não pode ser nulo")
     private String nome;
 
-    @Column(name = "cpf", length = 14)
+    @Column(length = 80)
+    @Email(message = "Informe um email valido")
+    @NotEmpty(message = "Campo email e obrigatório")
+    @NotNull(message = "Campo email não deve ser nulo")
+    private String email;
+
+    @Column(length = 14)
+    @CPF(message = "Informe um cof valido")
+    @NotEmpty(message = "Campo CPF e obrigatório")
+    @NotNull(message = "Campo CPF não deve ser nulo")
     private String cpf;
 
-    @Column(name = "rg", length = 10)
+    @Column(length = 10)
+    @NotEmpty(message = "Campo RG e obrigatório")
+    @NotNull(message = "Campo RG não deve ser nulo")
     private String rg;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private Set<Pedido> pedidos;
 }
