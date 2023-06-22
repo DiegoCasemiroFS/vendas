@@ -1,5 +1,6 @@
 package com.github.DiegoCasemiroFS.vendas.controller.error;
 
+import com.github.DiegoCasemiroFS.vendas.exception.PedidoNaoEncontradoException;
 import com.github.DiegoCasemiroFS.vendas.exception.RegraNegocioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +29,12 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(RegraNegocioException.class)
     public ApiError handlerRegraNegocioException(RegraNegocioException regraNegocioException) {
         return new ApiError(regraNegocioException.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(PedidoNaoEncontradoException.class)
+    public ApiError handlePedidoNotFoundException(PedidoNaoEncontradoException pedidoNaoEncontradoException) {
+        return new ApiError(pedidoNaoEncontradoException.getMessage());
     }
 }
 

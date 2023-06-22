@@ -1,10 +1,7 @@
 package com.github.DiegoCasemiroFS.vendas.entity;
 
 import com.github.DiegoCasemiroFS.vendas.enums.StatusPedido;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +43,7 @@ public class Pedido {
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
-    //    @Setter
+    @Setter
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
 

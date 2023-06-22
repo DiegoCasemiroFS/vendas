@@ -1,6 +1,7 @@
 package com.github.DiegoCasemiroFS.vendas.service;
 
 import com.github.DiegoCasemiroFS.vendas.entity.Cliente;
+import com.github.DiegoCasemiroFS.vendas.exception.RegraNegocioException;
 import com.github.DiegoCasemiroFS.vendas.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClienteService {
 
-    private static final String REGISTRO_NOT_FOUND = "Cliente não encontrado";
-
     private final ClienteRepository clienteRepository;
 
     public Cliente findById(Long id) {
-        return clienteRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_FOUND));
-
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
     }
 
     public List<Cliente> ListAll() {
@@ -32,14 +30,14 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente update(Long id, Cliente cliente){
+    public Cliente update(Long id, Cliente cliente) {
         return clienteRepository.findById(id)
                 .map(f -> {
                     cliente.setId(f.getId());
                     clienteRepository.save(cliente);
                     return cliente;
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_FOUND));
+                .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
     }
 
     public void delete(Long id){
@@ -48,6 +46,6 @@ public class ClienteService {
             clienteRepository.delete(f);
             return Void.TYPE;
         })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_FOUND));
+                .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
     }
 }
