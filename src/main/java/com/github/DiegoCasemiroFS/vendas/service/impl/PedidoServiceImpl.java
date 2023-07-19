@@ -1,5 +1,7 @@
 package com.github.DiegoCasemiroFS.vendas.service.impl;
 
+import com.github.DiegoCasemiroFS.vendas.controller.dto.InformacaoItemPedidoDto;
+import com.github.DiegoCasemiroFS.vendas.controller.dto.InformacaoPedidoDto;
 import com.github.DiegoCasemiroFS.vendas.controller.dto.PedidoDto;
 import com.github.DiegoCasemiroFS.vendas.entity.Cliente;
 import com.github.DiegoCasemiroFS.vendas.entity.ItemPedido;
@@ -14,7 +16,11 @@ import com.github.DiegoCasemiroFS.vendas.service.PedidoService;
 import com.github.DiegoCasemiroFS.vendas.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,9 +45,12 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Optional<Pedido> bringComplete(Long id) {
+    public InformacaoPedidoDto bringComplete(Long id) {
         Optional<Pedido> pedidoRepositoryByIdFetchItens = pedidoRepository.findByIdFetchItens(id);
-        return pedidoRepositoryByIdFetchItens;
+        return pedidoRepositoryByIdFetchItens.map(
+                        m -> buildInformacaoPedidoDto(m)
+                )
+                .orElseThrow(() -> new PedidoNaoEncontradoException());
     }
 
     @Override
@@ -77,5 +86,32 @@ public class PedidoServiceImpl implements PedidoService {
                         })
                 .collect(Collectors.toList());
         return itemsPedido;
+    }
+
+    private InformacaoPedidoDto buildInformacaoPedidoDto(Pedido pedido) {
+        return InformacaoPedidoDto.builder()
+                .id(pedido.getId())
+                .dataPedido(pedido.getDataPedido().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                .cpf(pedido.getCliente().getCpf())
+                .nome(pedido.getCliente().getNome())
+                .total(pedido.getTotal())
+                .status(pedido.getStatus().name())
+                .items(buildInformacaoItemPedidoDto(pedido.getItems()))
+                .build();
+    }
+
+    private List<InformacaoItemPedidoDto> buildInformacaoItemPedidoDto(List<ItemPedido> items) {
+        if (CollectionUtils.isEmpty(items)) {
+            return Collections.emptyList();
+        }
+
+        return items.stream()
+                .map(m -> InformacaoItemPedidoDto.builder()
+                        .descricaoProduto(m.getProduto().getDescricao())
+                        .precoUnitario(m.getProduto().getPreco())
+                        .quantidade(m.getQuantidade())
+                        .build()
+                )
+                .collect(Collectors.toList());
     }
 }

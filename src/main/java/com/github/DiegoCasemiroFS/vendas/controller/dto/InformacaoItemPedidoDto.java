@@ -12,8 +12,6 @@ import java.math.BigDecimal;
 public class InformacaoItemPedidoDto {
 
     private String descricaoProduto;
-
     private BigDecimal precoUnitario;
-
     private Integer quantidade;
 }
