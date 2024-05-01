@@ -22,11 +22,11 @@ public class Cliente {
 
     @Id     //usado para definir uma chave primária, e quando eu quiser acessar qualquer informação da minha tabela, eu vou procurar pelo id (pirmary key)
     @Setter
-    @Column(name = "id") // especifica o nome da coluna
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100) //define o nome e o tamanho da coluna
+    @Column(length = 100)
     @NotEmpty(message = "Campo nome e obrigatório")
     @NotNull(message = "Campo nome não pode ser nulo")
     private String nome;
@@ -38,7 +38,7 @@ public class Cliente {
     private String email;
 
     @Column(length = 14)
-    @CPF(message = "Informe um cof valido")
+    @CPF(message = "Informe um cpf valido")
     @NotEmpty(message = "Campo CPF e obrigatório")
     @NotNull(message = "Campo CPF não deve ser nulo")
     private String cpf;

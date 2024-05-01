@@ -30,16 +30,13 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @Setter
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    //    @Setter
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-    //    @Setter
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
@@ -49,12 +46,4 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> items;
-
-//    Pode-se criar quantos construtores forem necessários, para a criação do objeto. Desta forma evita-se o uso de Setter desnecessários
-//    public Pedido(Cliente cliente, LocalDate dataPedido, BigDecimal total, StatusPedido status) {
-//        this.cliente = cliente;
-//        this.dataPedido = dataPedido;
-//        this.total = total;
-//        this.status = status;
-//    }
 }

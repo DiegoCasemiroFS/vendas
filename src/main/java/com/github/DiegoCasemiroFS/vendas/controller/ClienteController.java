@@ -7,13 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//A classe do tipo controller cuida da interação do usuario com o sistema
-
-//ApiREST - get, put, post, patch, delete; também utilizará os status http (Ex: 200, 404)
-
-@RestController//recebe verbo (get, put, post, patch, delete) e devolve codigo (Ex: 200, 404)
+@RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/api/clientes") //define o prefixo da URL que será tratado por este controlador
+@RequestMapping("v1/api/clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -28,7 +24,7 @@ public class ClienteController {
         return clienteService.ListAll();
     }
 
-    @PostMapping
+    @PostMapping 
     public Cliente include(@RequestBody Cliente cliente){
         return clienteService.include(cliente);
     }

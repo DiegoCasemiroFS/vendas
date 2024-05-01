@@ -14,8 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProdutoService {
 
-    // private static final String REGISTRO_NOT_FOUND = "Produto não encontrado.";
-
     private final ProdutoRepository produtoRepository;
 
     public Produto findById(Long id) {
@@ -47,7 +45,6 @@ public class ProdutoService {
                     produtoRepository.delete(f);
                     return Void.TYPE;
                 })
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, REGISTRO_NOT_FOUND));
                 .orElseThrow(() -> new RegraNegocioException("Código de produto inválido."));
     }
 }

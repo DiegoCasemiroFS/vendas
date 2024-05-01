@@ -17,8 +17,6 @@ public class PedidoController {
 
     @PostMapping
     public Long include(@RequestBody PedidoDto pedidoDto) {
-//        Pedido pedido = pedidoService.include(pedidoDto);
-//        return pedido.getId();
         return pedidoService.include(pedidoDto).getId();
     }
 
@@ -32,8 +30,6 @@ public class PedidoController {
             @PathVariable Long id,
             @RequestBody AtualizacaoStatusPedidoDto atualizacaoStatusPedidoDTO
     ) {
-//        String novoStatus = atualizacaoStatusPedidoDTO.getNovoStatus();
-//        pedidoService.updateStatus(id, StatusPedido.valueOf(novoStatus));
         pedidoService.updateStatus(id, StatusPedido.valueOf(atualizacaoStatusPedidoDTO.getNovoStatus()));
     }
 }
