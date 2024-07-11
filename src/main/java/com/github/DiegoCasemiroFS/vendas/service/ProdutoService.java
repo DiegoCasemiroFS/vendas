@@ -4,9 +4,7 @@ import com.github.DiegoCasemiroFS.vendas.entity.Produto;
 import com.github.DiegoCasemiroFS.vendas.exception.RegraNegocioException;
 import com.github.DiegoCasemiroFS.vendas.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 

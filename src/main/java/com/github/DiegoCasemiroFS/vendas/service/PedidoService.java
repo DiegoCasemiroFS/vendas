@@ -5,8 +5,6 @@ import com.github.DiegoCasemiroFS.vendas.controller.dto.PedidoDto;
 import com.github.DiegoCasemiroFS.vendas.entity.Pedido;
 import com.github.DiegoCasemiroFS.vendas.enums.StatusPedido;
 
-import java.util.Optional;
-
 public interface PedidoService {
 
     Pedido include(PedidoDto pedidoDto);
